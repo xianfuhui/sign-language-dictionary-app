@@ -1,0 +1,325 @@
+<!doctype html>
+<!--[if IE 9]> <html class="no-js ie9 fixed-layout" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js " lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Site Meta -->
+    <title>Sign Language Dictionary</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="/frontend/user/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/frontend/user/images/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="/frontend/user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/carousel.css">
+    <link rel="stylesheet" href="/frontend/user/css/animate.css">
+    <link rel="stylesheet" href="/frontend/user/style.css">
+
+    <!--[if lt IE 9]>
+        <script src="js/vendor/html5shiv.min.js"></script>
+        <script src="js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- CSS for Carousel -->
+    <style>
+        .caro-item {
+            width: 100%;
+            max-width: 300px;
+            /* Set maximum width for items */
+            height: 450px;
+            /* Fixed height */
+            overflow: hidden;
+            /* Ensure content does not overflow */
+            margin: 0 auto;
+            /* Center items */
+        }
+
+        .course-box {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .image-wrap {
+            height: 60%;
+            /* Height for the image section */
+            overflow: hidden;
+        }
+
+        .image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ensure image fills the container */
+        }
+
+        .course-details {
+            padding: 10px;
+            height: 30%;
+            /* Height for the details section */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* Ensure text does not overflow */
+        }
+
+        .course-footer {
+            padding: 10px;
+            height: 10%;
+            /* Height for the footer section */
+        }
+    </style>
+
+    <!-- CSS for SEARCH bar -->
+    <style>
+        .search-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-container input[type="text"] {
+            width: 60%;
+            padding: 20px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+
+        .search-container button {
+            padding: 20px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: 1s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <img class="preloader" src="/frontend/user/images/loader.gif" alt="">
+    </div><!-- end loader -->
+    <!-- END LOADER -->
+
+    <div id="wrapper">
+        <%- include('./components/user_Header') %>
+
+        <section style="height: 500px;" id="home" class="video-section js-height-full">
+            <div class="overlay"></div>
+            <div class="home-text-wrapper relative container">
+                <div class="home-message">
+                    <p>Sign Language Dictionary</p>
+                    <h2 style="margin: 0px; color:white">Learn Sign Language with Common Daily Phrases</h2>
+                    <small>A collection of frequently used sign language phrases in daily life</small>
+                    <div class="btn-wrapper">
+                        <div class="text-center">
+                            <a href="#" class="btn btn-primary wow slideInLeft">Read More</a> &nbsp;&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEARCH BAR -->
+        <section class="section db p120" style="background-color: white;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tagline-message page-title text-center">
+                            <div class="search-container">
+                                <input type="text" id="searchInput" placeholder="Search Vocabulary..." oninput="searchVocabulary()">
+                                <div id="suggestions" class="suggestions-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TOPICS -->
+        <section class="section gb">
+            <div class="container">
+                <div class="section-title text-center">
+                    <h1 style="font-size: 50px;">Learn <span style="font-weight: bold;">Sign Language</span> by Topic</h1>
+                    <p style="font-size: 22px;">A list of over 200 topics covering various areas of life</p>
+                </div>                    
+
+                <div id="owl-01" class="owl-carousel owl-theme owl-theme-01">
+
+                    <% topics.forEach(topic=> { %>
+                        <div class="caro-item">
+                            <div class="course-box">
+                                <div class="image-wrap entry">
+                                    <img style=" height: 280px;" src="/images/<%= topic.topic_image %>" alt=""
+                                        class="img-responsive">
+
+                                    <div class="magnifier">
+                                        <a href="#" title=""><i class="flaticon-add"></i></a>
+                                    </div>
+                                </div><!-- end image-wrap -->
+                                <div class="course-details">
+                                    <h4>
+                                        <small>
+                                            <%= topic.topic_name %>
+                                        </small>
+                                        <a href="#" title="">
+                                            <%= topic.topic_name %>
+                                        </a>
+                                    </h4>
+                                    <p>
+                                        <%= topic.topic_description %>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+                <hr class="invis">
+
+                <div class="section-button text-center">
+                    <a href="/user/list-topic" class="btn btn-primary">View All Topics</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- VOCABULARY -->
+        <section class="section gb" style="padding-top: 20px;">
+            <div class="container">
+                <div class="section-title text-center">
+                    <h1 style="font-size: 50px;">Popular Vocabulary</h1>
+                </div><!-- end title -->
+
+                <div class="row">
+                    <% vocabularys.slice(0, 9).forEach(vocabulary=> { %>
+                        <div class="col-lg-4 col-md-12" style="margin-bottom: 20px;">
+                            <div class="blog-box">
+                                <div class="image-wrap entry">
+                                    <video style="height: 200px; width: 100%; object-fit: cover;"
+                                        src="<%= vocabulary.vocabulary_video_link.replace('src\\public', '' ) %>"></video>
+                                    <div class="magnifier">
+                                        <a href="blog-single.html" title=""><i class="flaticon-add"></i></a>
+                                    </div>
+                                </div><!-- end image-wrap -->
+
+                                <div class="blog-desc">
+                                    <h3 style="color: #01bacf; margin:0px">
+                                        <%= vocabulary.vocabulary_topic %>
+                                    </h3>
+                                    <h1 style="margin: 0px;"><a href="blog-single.html"></a>
+                                        <%= vocabulary.vocabulary_name %>
+                                    </h1>
+                                    <small>
+                                        <%= vocabulary.updatedAt %>
+                                    </small>
+                                </div><!-- end blog-desc -->
+                            </div><!-- end blog -->
+                        </div><!-- end col -->
+                    <% }); %>
+                </div><!-- end row -->
+
+                <div class="section-button text-center">
+                    <a href="/user/list-vocabulary" class="btn btn-primary">View All Vocabulary</a>
+                </div>
+            </div><!-- end container -->
+        </section>
+
+        <!-- FOOTER -->
+        <%- include('./components/user_Footer') %>
+    </div><!-- end wrapper -->
+
+    <!-- jQuery Files -->
+    <script src="/frontend/user/js/jquery.min.js"></script>
+    <script src="/frontend/user/js/bootstrap.min.js"></script>
+    <script src="/frontend/user/js/carousel.js"></script>
+    <script src="/frontend/user/js/animate.js"></script>
+    <script src="/frontend/user/js/custom.js"></script>
+
+    <script>
+        function searchVocabulary() {
+            const query = document.getElementById('searchInput').value;
+            if (query.length < 2) {
+                document.getElementById('suggestions').innerHTML = '';
+                return;
+            }
+    
+            fetch(`/user/search-vocabulary?q=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    const suggestions = data.map(item => `<div class="suggestion-item" onclick="selectVocabulary('${item._id}')">${item.vocabulary_name}</div>`);
+                    document.getElementById('suggestions').innerHTML = suggestions.join('');
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    
+        function selectVocabulary(id) {
+            window.location.href = `/user/detail-vocabulary/${id}`;
+        }
+    </script>
+
+    <style>
+        .suggestions-box {
+            position: absolute;
+            top: 100%; /* Position right below the search input */
+            left: 0;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f7f7f7;
+        }
+    </style>
+</body>
+
+</html>

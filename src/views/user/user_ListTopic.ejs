@@ -1,0 +1,255 @@
+<!doctype html>
+<!--[if IE 9]> <html class="no-js ie9 fixed-layout" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js " lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Site Meta -->
+    <title>Sign Language Dictionary</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="/frontend/user/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/frontend/user/images/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="/frontend/user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/carousel.css">
+    <link rel="stylesheet" href="/frontend/user/css/animate.css">
+    <link rel="stylesheet" href="/frontend/user/style.css">
+
+    <!--[if lt IE 9]>
+		<script src="js/vendor/html5shiv.min.js"></script>
+		<script src="js/vendor/respond.min.js"></script>
+	<![endif]-->
+
+    <!-- CSS for the theme -->
+    <style>
+        .caro-item {
+            width: 100%;
+            max-width: 300px;
+            height: 450px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .course-box {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .image-wrap {
+            height: 60%;
+            overflow: hidden;
+        }
+
+        .image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .course-details {
+            padding: 10px;
+            height: 30%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .course-footer {
+            padding: 10px;
+            height: 10%;
+        }
+    </style>
+
+    <!-- CSS for SEARCH bar -->
+    <style>
+        .search-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-container input[type="text"] {
+            width: 60%;
+            padding: 20px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+
+        .search-container button {
+            padding: 20px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: 1s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <img class="preloader" src="/frontend/user/images/loader.gif" alt="">
+    </div><!-- end loader -->
+    <!-- END LOADER -->
+
+    <div id="wrapper">
+        <%- include('./components/user_Header') %>
+
+        <section style="height: 500px;" id="home" class="video-section js-height-full">
+            <div class="overlay"></div>
+            <div class="home-text-wrapper relative container">
+                <div class="home-message">
+                    <p>Sign Language Dictionary</p>
+                    <h2 style="margin: 0px; color:white ">Learn sign language with commonly used daily phrases</h2>
+                    <small>A collection of commonly used phrases in sign language used frequently in daily life</small>
+                    <div class="btn-wrapper">
+                        <div class="text-center">
+                            <a href="#" class="btn btn-primary wow slideInLeft">Read More</a> &nbsp;&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section db p120">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tagline-message page-title text-center">
+                            <h3>Topic List</h3>
+                            <ul class="breadcrumb">
+                                <li><a href="/user/home">Home</a></li>
+                                <li class="active">Topics</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search bar -->
+        <section class="section db p120" style="background-color: white;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tagline-message page-title text-center">
+                            <div class="search-container">
+                                <input type="text" id="searchInput" placeholder="Search topics...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="searchResults" style="margin-top: 20px;">
+            <section class="section gb nopadtop">
+                <div class="container">
+                    <div class="boxed boxedp4">
+                        <div class="row blog-grid">
+                            <% list_topic.forEach(item => { %>
+                                <div class="item" data-name="<%= item.topic_name %>">
+                                    <div class="col-md-4">
+                                        <div class="course-box">
+                                            <div class="image-wrap entry">
+                                                <img style="height: 180px; object-fit: contain"
+                                                    src="/images/<%=item.topic_image %>" alt="" class="img-responsive">
+                                            </div><!-- end image-wrap -->
+                                            <div class="course-details">
+                                                <h4>
+                                                    <small>Topic</small>
+                                                    <a href="/user/list-vocabulary-topic/<%= item._id %>" title="">
+                                                        <h2>
+                                                            <%= item.topic_name %>
+                                                        </h2>
+                                                </h4>
+                                                <p>
+                                                    <%= item.topic_description %>
+                                                </p>
+                                            </div>
+                                            <div class="course-footer clearfix">
+                                                <div class="pull-left">
+                                                    <ul class="list-inline">
+                                                        <li><a href="#"><i class="fa fa-clock-o"></i><%= item.updatedAt %></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- FOOTER -->
+        <%- include('./components/user_Footer') %>
+    </div><!-- end wrapper -->
+
+    <!-- jQuery Files -->
+    <script src="/frontend/user/js/jquery.min.js"></script>
+    <script src="/frontend/user/js/bootstrap.min.js"></script>
+    <script src="/frontend/user/js/carousel.js"></script>
+    <script src="/frontend/user/js/animate.js"></script>
+    <script src="/frontend/user/js/custom.js"></script>
+    <!-- VIDEO BG PLUGINS -->
+    <script src="/frontend/user/js/videobg.js"></script>
+
+    <script>
+        function searchVocabulary() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.querySelectorAll('.item');
+
+            items.forEach(item => {
+                const name = item.getAttribute('data-name').toLowerCase();
+
+                if (name.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Add event listener to the search input to trigger the function as the user types
+        document.getElementById('searchInput').addEventListener('keyup', searchVocabulary);
+    </script>
+
+</body>
+
+</html>

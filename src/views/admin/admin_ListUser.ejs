@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>List User</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+
+    <link rel="icon" href="/assets/img/kaiadmin/icon.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { families: ["Public Sans:300,400,500,600,700"] },
+            custom: {
+                families: [
+                    "Font Awesome 5 Solid",
+                    "Font Awesome 5 Regular",
+                    "Font Awesome 5 Brands",
+                    "simple-line-icons",
+                ],
+                urls: ["/assets/css/fonts.min.css"],
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            },
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <!-- <link rel="stylesheet" href="assets/css/demo.css" /> -->
+</head>
+
+<body>
+    <div class="wrapper">
+        <%- include('./components/sidebar') %>
+
+        <div class="main-panel">
+            <%- include('./components/main-header') %>
+
+            <div class="container">
+                <div class="page-inner">
+                    <div class="page-header">
+                        <h3 class="fw-bold mb-3">List of Users</h3>
+                        <ul class="breadcrumbs mb-3">
+                            <li class="nav-home">
+                                <a href="/admin/index">
+                                    <i class="icon-home"></i>
+                                </a>
+                            </li>
+                            <li class="separator">
+                                <i class="icon-arrow-right"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/list-user">List of Users</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="add-row" class="display table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Avatar</th>
+                                                    <th>User name</th>
+                                                    <th>Email</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% list_user.forEach(user=> { %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= user.user_avatar %>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/admin/detail-user/<%= user._id %>">
+                                                                <%= user.user_full_name %>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <%= user.user_email %>
+                                                        </td>
+                                                        <td style="font-weight: bold;"
+                                                            class="<%= user.user_status ? 'text-success' : 'text-danger' %>">
+                                                            <%= user.user_status ? 'Unlock' : 'Lock' %>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-button-action">
+                                                                <button type="button" class="btn btn-success alert-demo"
+                                                                    data-id="<%= user._id %>" 
+                                                                    data-status="<%= user.user_status %>">
+                                                                    Status
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--   Core JS Files   -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="/assets/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle -->
+    <script src="/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="/assets/js/kaiadmin.min.js"></script>
+
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="/assets/js/setting-demo.js"></script>
+    <script src="/assets/js/demo.js"></script>
+
+    <!-- FUNCTION TO LOGOUT -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/assets/js/admin/logOut.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#basic-datatables").DataTable({});
+
+            $("#multi-filter-select").DataTable({
+                pageLength: 5,
+                initComplete: function () {
+                    this.api()
+                        .columns()
+                        .every(function () {
+                            var column = this;
+                            var select = $(
+                                '<select class="form-select"><option value=""></option></select>'
+                            )
+                                .appendTo($(column.footer()).empty())
+                                .on("change", function () {
+                                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                    column
+                                        .search(val ? "^" + val + "$" : "", true, false)
+                                        .draw();
+                                });
+
+                            column
+                                .data()
+                                .unique()
+                                .sort()
+                                .each(function (d, j) {
+                                    select.append(
+                                        '<option value="' + d + '">' + d + "</option>"
+                                    );
+                                });
+                        });
+                },
+            });
+
+            // Add Row
+            $("#add-row").DataTable({
+                pageLength: 5,
+            });
+
+        });
+    </script>
+
+    <script>
+        function shortenPassword(password, length = 10) {
+            if (typeof password !== 'string') return '';
+            return password.length > length ? password.substring(0, length) + '...' : password;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.password-short').forEach(span => {
+                const password = span.getAttribute('data-password');
+                span.textContent = shortenPassword(password, 10);
+            });
+        });
+    </script>
+
+    <script>
+        $(".alert-demo").click(function (e) {
+            swal({
+                title: "Change status",
+                icon: "warning",
+                buttons: {
+                    confirm: {
+                        text: "Confirm",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-success",
+                        closeModal: true,
+                    },
+                    cancel: {
+                        text: "Cancel",
+                        value: false,
+                        visible: true,
+                        className: "btn btn-danger",
+                        closeModal: true,
+                    },
+                },
+            }).then((willChange) => {
+                if (willChange) {
+                    const userId = $(this).data('id');
+                    const status = $(this).data('status');
+
+                    axios.post(`/admin/change-status-user/${userId}`, { status: status })
+                        .then(response => {
+                            swal("Status changed successfully!", {
+                                icon: "success",
+                            }).then(() => {
+                                location.reload();
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error changing status:', error);
+                            swal("Failed to change status!", {
+                                icon: "error",
+                            });
+                        });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

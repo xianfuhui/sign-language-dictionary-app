@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>List Topic</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+
+    <link rel="icon" href="/assets/img/kaiadmin/icon.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { families: ["Public Sans:300,400,500,600,700"] },
+            custom: {
+                families: [
+                    "Font Awesome 5 Solid",
+                    "Font Awesome 5 Regular",
+                    "Font Awesome 5 Brands",
+                    "simple-line-icons",
+                ],
+                urls: ["/assets/css/fonts.min.css"],
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            },
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <!-- <link rel="stylesheet" href="assets/css/demo.css" /> -->
+</head>
+
+<body>
+    <div class="wrapper">
+        <%- include('./components/sidebar') %>
+
+        <div class="main-panel">
+            <%- include('./components/main-header') %>
+
+            <div class="container">
+                <div class="page-inner">
+                    <div class="page-header">
+                        <h3 class="fw-bold mb-3">List of Topics</h3>
+                        <ul class="breadcrumbs mb-3">
+                            <li class="nav-home">
+                                <a href="/admin/index">
+                                    <i class="icon-home"></i>
+                                </a>
+                            </li>
+                            <li class="separator">
+                                <i class="icon-arrow-right"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/list-topic">List of Topics</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center">
+                                        <button class="btn btn-primary btn-round ms-auto" data-bs-toggle="modal"
+                                            data-bs-target="#addVocbularyModal">
+                                            <i class="fa fa-plus"></i>
+                                            Add Topic
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <!-- ADD TOPIC MODAL -->
+                                    <div class="modal fade" id="addVocbularyModal" tabindex="-1" role="dialog"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header border-0">
+                                                    <h5 class="modal-title">
+                                                        <span class="fw-mediumbold"> Add new topic</span>
+                                                    </h5>
+                                                    <button type="button" class="close closeModalButton"
+                                                        data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="small">
+                                                        Create a new topic using this form, make sure you fill them
+                                                        all
+                                                    </p>
+                                                    <form id="addTopic_form">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="form-group form-group-default">
+                                                                    <label>Topic name</label>
+                                                                    <input id="topic_name" type="text"
+                                                                        class="form-control" placeholder="Fill name"
+                                                                        required />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 ">
+                                                                <div class="form-group form-group-default">
+                                                                    <label>Topic description</label>
+                                                                    <input id="topic_description" type="text"
+                                                                        class="form-control"
+                                                                        placeholder="Fill description" required />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label for="exampleFormControlFile1">Topic
+                                                                        image</label>
+                                                                    <input type="file" class="form-control-file"
+                                                                        id="topic_image" required />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer border-0">
+                                                    <button type="button" id="addRowButton" class="btn btn-primary">
+                                                        Add
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger closeModalButton"
+                                                        data-dismiss=" modal">
+                                                        Close
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- EDIT TOPIC MODAL -->
+                                    <div class="modal fade" id="editTopicModal" tabindex="-1" role="dialog"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header border-0">
+                                                    <h5 class="modal-title">
+                                                        <span class="fw-mediumbold"> Edit topic</span>
+                                                    </h5>
+                                                    <button type="button" class="close closeModalButton"
+                                                        data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="small">
+                                                        Edit a topic using this form, make sure you fill them
+                                                        all
+                                                    </p>
+                                                    <form id="editTopic_form">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="form-group form-group-default">
+                                                                    <label>Topic name</label>
+                                                                    <input id="edit_topic_name" type="text"
+                                                                        class="form-control" placeholder="Fill name"
+                                                                        required />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <div class="form-group form-group-default">
+                                                                    <label>Description</label>
+                                                                    <input id="edit_topic_description" type="text"
+                                                                        class="form-control"
+                                                                        placeholder="Fill description" required />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label for="exampleFormControlFile1">Topic
+                                                                        image</label>
+                                                                    <input type="file" class="form-control-file"
+                                                                        id="edit_topic_image" required />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer border-0">
+                                                    <button type="button" id="editRowButton" class="btn btn-primary"
+                                                        data-id="">
+                                                        Edit
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger closeModalButton"
+                                                        data-dismiss=" modal">
+                                                        Close
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table id="add-row" class="display table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+
+                                                    <th style="width: 10%">Topic avatar</th>
+                                                    <th style="width: 30%">Topic name</th>
+                                                    <th style="width: 50%">Description</th>
+                                                    <th style="width: 10%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% list_topic.forEach(topic=> { %>
+                                                    <tr>
+                                                        <td>
+
+                                                            <div class="avatar avatar-lg">
+                                                                <img src=" /images/<%= topic.topic_image %>" alt="..."
+                                                                    class="avatar-img rounded-square">
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <a href="/admin/detail-topic/<%= topic._id %>">
+                                                                <%= topic.topic_name %>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <%= topic.topic_description %>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-button-action">
+                                                                <button type="button" data-bs-toggle="tooltip" title=""
+                                                                    class="btn btn-link btn-primary btn-lg"
+                                                                    data-original-title="Edit Task" id="edit-icon"
+                                                                    data-id="<%= topic._id %>">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </button>
+                                                                <button type="button" data-bs-toggle="tooltip" title=""
+                                                                    class="btn btn-link btn-danger delete-icon"
+                                                                    data-id="<%= topic._id %>"
+                                                                    data-original-title="Remove">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--   Core JS Files   -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="/assets/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle -->
+    <script src="/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="/assets/js/kaiadmin.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#basic-datatables").DataTable({});
+
+            $("#multi-filter-select").DataTable({
+                pageLength: 5,
+                initComplete: function () {
+                    this.api()
+                        .columns()
+                        .every(function () {
+                            var column = this;
+                            var select = $(
+                                '<select class="form-select"><option value=""></option></select>'
+                            )
+                                .appendTo($(column.footer()).empty())
+                                .on("change", function () {
+                                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                    column
+                                        .search(val ? "^" + val + "$" : "", true, false)
+                                        .draw();
+                                });
+
+                            column
+                                .data()
+                                .unique()
+                                .sort()
+                                .each(function (d, j) {
+                                    select.append(
+                                        '<option value="' + d + '">' + d + "</option>"
+                                    );
+                                });
+                        });
+                },
+            });
+
+            // Add Row
+            $("#add-row").DataTable({
+                pageLength: 5,
+            });
+
+        });
+    </script>
+
+    <!-- FUNCTION TO LOGOUT -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/assets/js/admin/logOut.js"></script>
+
+    <!-- FUNCTION CLOSE MODAL -->
+    <script>
+        $(document).ready(function () {
+            // Sự kiện lắng nghe khi nhấn vào nút đóng
+            $('.closeModalButton').click(function () {
+                $('#addVocbularyModal').modal('hide');
+            });
+
+            $('.closeModalButton').click(function () {
+                $('#editTopicModal').modal('hide');
+            });
+
+        });
+    </script>
+
+    <!-- ADD TOPIC FUNCTION -->
+    <script>
+        document.getElementById('addRowButton').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const form = document.getElementById('addTopic_form');
+            const isValid = form.checkValidity();
+
+            if (!isValid) {
+                form.reportValidity();
+            } else {
+
+                const topic_name = document.getElementById('topic_name').value;
+                const topic_description = document.getElementById('topic_description').value;
+                const topic_image = document.getElementById('topic_image')
+                const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+
+                if (topic_image) {
+                    const fileExtension = topic_image.files[0].name.split('.').pop().toLowerCase();
+                    if (!allowedExtensions.includes(fileExtension)) {
+                        return swal("Only image files are allowed!", {
+                            icon: "error",
+                            buttons: {
+                                confirm: {
+                                    className: "btn btn-danger",
+                                },
+                            },
+                        });
+                    }
+
+                    // Kiểm tra kích thước tệp
+                    if (topic_image.size > 5 * 1024 * 1024) { // 5MB
+                        return swal("File size must be less than 5MB!", {
+                            icon: "error",
+                            buttons: {
+                                confirm: {
+                                    className: "btn btn-danger",
+                                },
+                            },
+                        });
+                    }
+                }
+
+                const formData = new FormData();
+                formData.append('topic_name', topic_name);
+                formData.append('topic_description', topic_description);
+                formData.append('topic_image', topic_image.files[0]);
+
+
+                // Gửi dữ liệu lên API
+                axios.post('/admin/add-topic', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                    .then(response => {
+                        swal("Added successfully!", {
+                            icon: "success",
+                            buttons: {
+                                confirm: {
+                                    className: "btn btn-success",
+                                },
+                            },
+                        }).then(() => {
+                            $('#addVocbularyModal').modal('hide');
+                            window.location.href = "/admin/list-topic";
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error adding new topic:', error);
+                        swal(error.message, {
+                            icon: "error",
+                            buttons: {
+                                confirm: {
+                                    className: "btn btn-danger",
+                                },
+                            },
+                        });
+                    });
+            }
+        });
+    </script>
+
+    <!-- EDIT TOPIC FUNCTION -->
+    <script>
+        // Truyền data cho EDIT modal
+        document.querySelectorAll('#edit-icon').forEach(button => {
+            button.addEventListener('click', function () {
+                const topicID = this.getAttribute('data-id');
+
+                axios.get(`/admin/topic/${topicID}`)
+                    .then(response => {
+                        const topic = response.data;
+
+                        // Điền dữ liệu vào các trường trong modal
+                        document.getElementById('edit_topic_name').value = topic.topic_name;
+                        document.getElementById('edit_topic_description').value = topic.topic_description;
+                        document.getElementById('edit_topic_image').innerText = topic.topic_image;
+
+                        const saveButton = document.getElementById('editRowButton');
+                        saveButton.setAttribute('data-id', topicID);
+                        // Hiển thị modal
+                        $('#editTopicModal').modal('show');
+                    })
+                    .catch(error => {
+                        console.error('Error fetching vocabulary:', error);
+                    });
+            });
+        });
+
+        document.getElementById('editRowButton').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const topicID = this.getAttribute('data-id');
+
+
+            const form = document.getElementById('editTopic_form');
+            const isValid = form.checkValidity();
+
+            if (!isValid) {
+                form.reportValidity();
+            } else {
+
+                const topic_name = document.getElementById('edit_topic_name').value
+                const topic_description = document.getElementById('edit_topic_description').value
+                const topic_image = document.getElementById('edit_topic_image')
+                const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+
+                if (topic_image) {
+                    const fileExtension = topic_image.files[0].name.split('.').pop().toLowerCase();
+                    if (!allowedExtensions.includes(fileExtension)) {
+                        return swal("Only image files are allowed!", {
+                            icon: "error",
+                            buttons: {
+                                confirm: {
+                                    className: "btn btn-danger",
+                                },
+                            },
+                        });
+                    }
+
+                    // Kiểm tra kích thước tệp
+                    if (topic_image.size > 5 * 1024 * 1024) { // 5MB
+                        return swal("File size must be less than 5MB!", {
+                            icon: "error",
+                            buttons: {
+                                confirm: {
+                                    className: "btn btn-danger",
+                                },
+                            },
+                        });
+                    }
+                }
+
+
+                const formData = new FormData();
+                formData.append('topic_name', topic_name);
+                formData.append('topic_description', topic_description);
+                formData.append('topic_image', topic_image.files[0]);
+
+                // Gửi dữ liệu lên API
+                axios.put(`/admin/edit-topic/${topicID}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                    .then(response => {
+                        swal("Edit topic successfully!", {
+                            icon: "success",
+                            buttons: {
+                                confirm: {
+                                    className: "btn btn-success",
+                                },
+                            },
+                        }).then(() => {
+                            $('#editTopicModal').modal('hide');
+                            window.location.href = "/admin/list-topic";
+
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error adding vocabulary:', error);
+                        swal("Failed to edit vocabulary!", {
+                            icon: "error",
+                            buttons: {
+                                confirm: {
+                                    className: "btn btn-danger",
+                                },
+                            },
+                        });
+                    });
+            }
+        });
+    </script>
+
+    <!-- DELETE VOCABULARY FUNCTION -->
+    <script>
+        $(".delete-icon").click(function (e) {
+            const topicID = this.getAttribute('data-id');
+            swal({
+                title: "Are you sure you delete ?",
+                icon: "warning",
+                buttons: {
+                    cancel: {
+                        value: false,
+                        visible: true,
+                        text: "Cancel",
+                        className: "btn btn-success",
+                    },
+                    confirm: {
+                        value: true,
+                        text: "Delete",
+                        className: "btn btn-danger",
+                    },
+                },
+            }).then((willLogout) => {
+                if (willLogout) {
+                    // Gọi API logout bằng Axios
+                    axios.delete(`delete-topic/${topicID}`, {})
+                        .then(response => {
+                            swal("Delete successfully", {
+                                icon: "success",
+                                buttons: {
+                                    confirm: {
+                                        className: "btn btn-success",
+                                    },
+                                },
+                            }).then(() => {
+                                window.location.href = "/admin/list-topic";
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            swal("Failed to delete !", {
+                                buttons: {
+                                    confirm: {
+                                        className: "btn btn-danger",
+                                    },
+                                },
+                            });
+                        });
+                } else {
+                    swal("Failed to delete !", {
+                        buttons: {
+                            confirm: {
+                                className: "btn btn-danger",
+                            },
+                        },
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

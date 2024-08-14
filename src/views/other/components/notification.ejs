@@ -1,0 +1,71 @@
+<style>
+    .error {
+        margin: 8px auto;
+        width: fit-content;
+        position: fixed;
+        top: 60px;
+        left: 50%; 
+        transform: translateX(-50%); 
+        padding: 15px;
+        background-color: rgb(245, 63, 93);
+        border-radius: 5px;
+        animation: hide 3s linear 2s 1 forwards;
+        font-weight: bold;
+    }
+
+    .error h2 {
+        padding: 0;
+        text-align: center;
+        font-size: 18px;
+        color: #fff;
+        margin: 0;
+    }
+
+    .error p {
+        color: red;
+        margin-top: 10px;
+    }
+
+    .success {
+        margin: 8px auto;
+        width: fit-content;
+        position: fixed;
+        top: 60px; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        padding: 15px;
+        background-color: rgb(88, 189, 111); 
+        border-radius: 5px;
+        animation: hide 3s linear 2s 1 forwards;
+        font-weight: bold;
+    }
+
+    .success h2 {
+        padding: 0;
+        text-align: center;
+        font-size: 18px;
+        color: #fff;
+        margin: 0;
+    }
+
+    .success p {
+        color: green; 
+        margin-top: 10px;
+    }
+</style>
+
+<% if (typeof messages !=='undefined' && messages.success) { %>
+    <div class="success">
+        <h2>
+            <%= messages.success %>
+        </h2>
+    </div>
+<% } %>
+<% if (typeof messages !== 'undefined' && messages.error) { %>
+    <div class="error">
+        <h2>
+            <%= messages.error %>
+        </h2>
+    </div>
+<% } %>
+

@@ -1,0 +1,318 @@
+<!doctype html>
+<!--[if IE 9]> <html class="no-js ie9 fixed-layout" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js " lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Site Meta -->
+    <title>Sign Language Dictionary</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="/frontend/user/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/frontend/user/images/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="/frontend/user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/carousel.css">
+    <link rel="stylesheet" href="/frontend/user/css/animate.css">
+    <link rel="stylesheet" href="/frontend/user/style.css">
+
+    <style>
+        #webcam-container {
+            width: 100%;
+            height: 500px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9f9f9;
+        }
+
+        .info-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .info-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-right {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <img class="preloader" src="/frontend/user/images/loader.gif" alt="">
+    </div><!-- end loader -->
+    <!-- END LOADER -->
+
+    <div id="wrapper">
+        <%- include('./components/user_Header') %>
+
+            <section style="height: 500px;" id="home" class="video-section js-height-full">
+                <div class="overlay"></div>
+                <div class="home-text-wrapper relative container">
+                    <div class="home-message">
+                        <p>Sign Language Dictionary</p>
+                        <h2 style="margin: 0px; color:white ">Learn sign language with common daily phrases</h2>
+                        <small>A collection of commonly used sign language phrases for everyday life</small>
+                        <div class="btn-wrapper">
+                            <div class="text-center">
+                                <a href="#" class="btn btn-primary wow slideInLeft">Read More</a> &nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div><!-- end row -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="section db p120">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tagline-message page-title text-center">
+                                <h3>Practice Vocabulary with AI</h3>
+                                <ul class="breadcrumb">
+                                    <li><a href="/user/home">Home</a></li>
+                                    <li class="active">Practice with AI</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <!-- Start webcam display and prediction results -->
+                    <div class="row" id="practiceItem">
+                        <div class="col-lg-12">
+                            <div id="webcam-container"></div>
+                            <div class="info-wrapper">
+                                <div class="info-left">
+                                    <div style="font-size: 20px; font-weight: bold; color: black; padding-bottom: 20px;">
+                                        Current Displayed Word: <span id="label-container"></span>
+                                    </div>
+                                    <div style="font-size: 20px; font-weight: bold; color: black; padding-bottom: 20px;">
+                                        Vocabulary to Guess: <span id="currentWord"></span>
+                                    </div>
+                                    <div style="font-size: 20px; font-weight: bold; color: black; padding-bottom: 20px;">
+                                        AI Message: <span id="message"></span>
+                                    </div>
+                                    <button type="button" style="font-size: 19px; margin-bottom: 20px;" class="btn btn-primary" onclick="init()">Start</button>
+                                    <button type="button" style="font-size: 19px; margin-bottom: 20px;" class="btn btn-warning" onclick="retryPage()">Retry</button>
+                                </div>
+                                <div class="info-right">
+                                    <button class="btn btn-danger" style="font-size: 19px; font-weight: bold; color: black; margin-bottom: 20px;">
+                                        Score: <span id="score"></span>
+                                    </button>
+                                </div>
+                            </div>
+            
+                            <!-- Table for logging AI messages and scores -->
+                            <div style="margin-top: 20px;">
+                                <h4>AI Practice Log</h4>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>AI Message</th>
+                                            <th>Vocabulary</th>
+                                            <th>Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="logTable">
+                                        <!-- Log rows will be appended here -->
+                                    </tbody>
+                                </table>
+                            </div>
+            
+                        </div>
+                    </div>
+            
+                    <hr class="invis">
+                </div>
+            </section>
+            
+            <!-- FOOTER -->
+            <%- include('./components/user_Footer') %>
+
+    </div>
+
+    <!-- jQuery Files -->
+    <script src="/frontend/user/js/jquery.min.js"></script>
+    <script src="/frontend/user/js/bootstrap.min.js"></script>
+    <script src="/frontend/user/js/carousel.js"></script>
+    <script src="/frontend/user/js/animate.js"></script>
+    <script src="/frontend/user/js/custom.js"></script>
+    <!-- VIDEO BG PLUGINS -->
+    <script src="/frontend/user/js/videobg.js"></script>
+
+    <script>
+        function retryPage() {
+            window.location.reload();
+        }
+    </script>
+
+    <!-- TensorFlow and Teachable Machine Libraries -->
+    <script src="/teachable-machine-library/tf.min.js"></script>
+    <script src="/teachable-machine-library/teachablemachine-image.min.js"></script>
+    <script type="text/javascript">
+        const shuffledListPractice = <%- JSON.stringify(shuffled_list_practice) %>;
+        let currentIndex = 0;
+        let score = 0;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const greetingMessage = 'Welcome! Let\'s get ready to practice!';
+            document.getElementById('message').innerText = greetingMessage;
+            
+            addLog(greetingMessage, '-', 0);
+
+            const startButton = document.querySelector('button[onclick="init()"]');
+
+            if (shuffledListPractice.length === 0) {
+                const emptyListMessage = 'Please custom or add vocabulary to your favorites list for vocabulary practice.';
+                document.getElementById('message').innerText = emptyListMessage;
+
+                addLog(emptyListMessage, '-', 0);
+
+                startButton.style.display = 'none';
+            } else {
+                startButton.style.display = 'inline-block';
+            }
+        });
+
+        // Load the image model and setup the webcam
+        async function init() {
+            try {
+                const greetingMessage = 'Welcome! Let\'s start practicing!';
+                document.getElementById('message').innerText = greetingMessage;
+                
+                // Log the greeting message in the table with a score of 0
+                addLog(greetingMessage, '-', 0);
+
+                const modelURL = "/models/model.json";
+                const metadataURL = "/models/metadata.json";
+
+                model = await tmImage.load(modelURL, metadataURL);
+                maxPredictions = model.getTotalClasses();
+
+                const flip = true;
+                webcam = new tmImage.Webcam(500, 500, flip);
+                await webcam.setup();
+                await webcam.play();
+                window.requestAnimationFrame(loop);
+
+                document.getElementById("webcam-container").appendChild(webcam.canvas);
+                labelContainer = document.getElementById("label-container");
+
+                updateScore();
+                updateWord();
+            } catch (error) {
+                console.error("Error initializing the webcam or model:", error);
+            }
+        }
+
+        async function loop() {
+            webcam.update();
+            await predict();
+            window.requestAnimationFrame(loop);
+        }
+
+        async function predict() {
+            try {
+                const prediction = await model.predictTopK(webcam.canvas, 1);
+                const predictedLabel = prediction[0].className;
+                const confidenceScore = (prediction[0].probability * 100).toFixed(2);
+
+                labelContainer.innerText = `${predictedLabel} (Confidence: ${confidenceScore}%)`;
+                
+                checkMatch(predictedLabel);
+            } catch (error) {
+                console.error("Error predicting:", error);
+            }
+        }
+
+        function checkMatch(predictedLabel) {
+            if (currentIndex >= shuffledListPractice.length) return;
+
+            const currentWord = shuffledListPractice[currentIndex].vocabulary.vocabulary_name;
+            let aiMessage;
+
+            if (predictedLabel === currentWord) {
+                score += 10;
+                aiMessage = 'Correct! You have +10 score! Moving to the next word...';
+                updateScore();
+
+                addLog(aiMessage, currentWord, score);
+
+                currentIndex++;
+                document.getElementById('message').innerText = aiMessage;
+
+                updateWord();
+            } else {
+                aiMessage = 'Try again!';
+                document.getElementById('message').innerText = aiMessage;
+            }
+        }
+
+        function updateScore() {
+            document.getElementById('score').innerText = score;
+        }
+
+        function updateWord() {
+            if (currentIndex < shuffledListPractice.length) {
+                document.getElementById('currentWord').innerText = shuffledListPractice[currentIndex].vocabulary.vocabulary_name;
+            } else {
+                document.getElementById('currentWord').innerText = null;
+                const endMessage = 'Congratulations! You have completed all words.';
+                document.getElementById('message').innerText = endMessage;
+                addLog(endMessage, '-', score);
+            }
+        }
+
+        function addLog(aiMessage, vocabulary, currentScore) {
+            const logTable = document.getElementById('logTable');
+            const newRow = document.createElement('tr');
+
+            newRow.innerHTML = `
+                <td>${aiMessage}</td>
+                <td>${vocabulary}</td>
+                <td>${currentScore}</td>
+            `;
+
+            logTable.appendChild(newRow);
+        }
+    </script>
+
+</body>
+
+</html>

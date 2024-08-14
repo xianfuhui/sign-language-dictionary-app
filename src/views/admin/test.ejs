@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Detail Vocabulary</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+
+    <link rel="icon" href="/assets/img/kaiadmin/icon.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { families: ["Public Sans:300,400,500,600,700"] },
+            custom: {
+                families: [
+                    "Font Awesome 5 Solid",
+                    "Font Awesome 5 Regular",
+                    "Font Awesome 5 Brands",
+                    "simple-line-icons",
+                ],
+                urls: ["/assets/css/fonts.min.css"],
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            },
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <!-- <link rel="stylesheet" href="assets/css/demo.css" /> -->
+</head>
+
+<body>
+    <div class="wrapper">
+        <%- include('./components/sidebar') %>
+
+        <div class="main-panel">
+            <%- include('./components/main-header') %>
+
+            <div class="container">
+                <div class="page-inner">
+                    <div class="row">
+                        <div class="card card-round">
+                            <div class="card-body">
+                                <div class="row row-demo-grid">
+
+                                    <!-- Vocabulary  -->
+                                    <div class="col-6 col-md-5">
+                                        <div class="card card-pricing card-pricing-focus">
+                                            <div class="card-header">
+                                                <h1 class="card-title">Vocabulary Information</h1>
+                                                <div class="card-price mt-3">
+                                                    <span class="price">
+                                                        <%= vocabulary.vocabulary_name %>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <ul class="specification-list">
+                                                    <li>
+                                                        <span class="name-specification">Topic</span>
+
+                                                        <span class="badge badge-success status-specification">
+                                                            <% list_vocabulary_topic.forEach(item => { %>
+                                                                <%= item.topic.topic_name %> 
+                                                            <% }); %>
+                                                        </span>
+
+                                                    </li>
+                                                    <li>
+                                                        <span class="name-specification">Difficult Levels</span>
+                                                        <span class="status-specification">
+                                                            <% for (let i=0; i < vocabulary.vocabulary_difficulty_level;
+                                                                i++) { %>
+                                                                <i style="color: rgb(255, 0, 0);"
+                                                                    class="fas fa-star"></i>
+                                                                <% } %>
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="name-specification">Description</span>
+                                                        <p><%= vocabulary.vocabulary_description %></p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Video -->
+                                    <div class="col-12 col-md-7">
+                                        <!-- Thêm phần chứa video -->
+                                        <div class="video-container mt-3">
+                                            <video controls style="width: 100%; height: 100%;">
+                                                <source
+                                                    src="<%= vocabulary.vocabulary_video_link.replace('src\\public', '' ) %>"
+                                                    type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="/assets/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle -->
+    <script src="/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="/assets/js/kaiadmin.min.js"></script>
+
+    <script>
+        $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
+            type: "line",
+            height: "70",
+            width: "100%",
+            lineWidth: "2",
+            lineColor: "#177dff",
+            fillColor: "rgba(23, 125, 255, 0.14)",
+        });
+
+        $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
+            type: "line",
+            height: "70",
+            width: "100%",
+            lineWidth: "2",
+            lineColor: "#f3545d",
+            fillColor: "rgba(243, 84, 93, .14)",
+        });
+
+        $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
+            type: "line",
+            height: "70",
+            width: "100%",
+            lineWidth: "2",
+            lineColor: "#ffa534",
+            fillColor: "rgba(255, 165, 52, .14)",
+        });
+    </script>
+
+
+    <!-- FUNCTION TO LOGOUT -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/assets/js/admin/logOut.js"></script>
+</body>
+
+</html>

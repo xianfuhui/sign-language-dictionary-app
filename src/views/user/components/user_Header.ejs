@@ -1,0 +1,86 @@
+<header style="padding-top: 20px;" class="header">
+    <div class="container">
+        <nav class="navbar navbar-default yamm">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="logo-normal">
+                    <a class="navbar-brand" href="/user/home"><img style="height: 100%;"
+                            src="/assets/img/kaiadmin/Logo.png" alt=""></a>
+                </div>
+            </div>
+
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/user/list-vocabulary">Vocabulary</a></li>
+                    <li><a href="/user/list-topic">Topic</a></li>
+                    <li><a href="/user/list-letter">Alphabet</a></li>
+                    <li><a href="/user/list-difficulty-level">Difficulty Level</a></li>
+                    <li><a href="/user/detail-vocabulary-ai">Check Vocabulary with AI</a></li>
+                    <li class="dropdown hassubmenu">
+                        <a href="/user/list-practice">Practice</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/user/list-practice"><i class="fa fa-tablet" aria-hidden="true"></i>
+                                    Practice</a></li>
+                            <li><a href="/user/list-practice-ai"><i class="fa fa-video-camera" aria-hidden="true"></i>
+                                    Practice with AI</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/user/list-recommendation-vocabulary">Custom & Recommended</a></li>
+
+                    <% if (user) { %>
+                        <li class="dropdown hassubmenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-expanded="false">
+                                <span class="fa fa-user-circle-o"></span>
+                                <%= user.user_full_name %>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/user/profile/"><i class="fa fa-info-circle" aria-hidden="true"></i>
+                                        Profile</a></li>
+                                <li><a href="/user/list-favorite"><i style="color: red;" class="fa fa-heart"
+                                            aria-hidden="true"></i>
+                                        Favorites</a></li>
+                                <li><a href="#" onclick="logout(event)"><i class="fa fa-sign-out"
+                                            aria-hidden="true"></i>
+                                        Log out</a></li>
+                            </ul>
+                        </li>
+                        <% } else { %>
+                            <!-- Displayed when not logged in -->
+                            <li><a href="/user/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Log in</a></li>
+                            <li><a href="/user/register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a></li>
+                            <% } %>
+                </ul>
+            </div>
+        </nav><!-- end navbar -->
+    </div><!-- end container -->
+</header>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+<script>
+    function logout(event) {
+        event.preventDefault(); // Prevent the link from performing the default action
+
+        Swal.fire({
+            title: 'Are you sure you want to log out?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Log out',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/user/logout'; // Change URL as needed
+            }
+        });
+    }
+</script>

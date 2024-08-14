@@ -1,0 +1,222 @@
+<!doctype html>
+<html class="no-js " lang="en">
+
+<head>
+    
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Site Meta -->
+    <title>Sign Language Dictionary</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="/frontend/user/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/frontend/user/images/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="/frontend/user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/carousel.css">
+    <link rel="stylesheet" href="/frontend/user/css/animate.css">
+    <link rel="stylesheet" href="/frontend/user/style.css">
+
+    <!-- CSS Card -->
+    <style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .title {
+            color: grey;
+            font-size: 18px;
+        }
+
+        button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+        }
+
+        button:hover,
+        a:hover {
+            opacity: 0.7;
+        }
+
+        .error {
+            margin: 8px auto;
+            width: fit-content;
+            position: fixed;
+            top: 60px;
+            left: 50%; 
+            transform: translateX(-50%); 
+            padding: 15px;
+            background-color: rgb(245, 63, 93);
+            border-radius: 5px;
+            animation: hide 3s linear 2s 1 forwards;
+            font-weight: bold;
+        }
+
+        .error h2 {
+            padding: 0;
+            text-align: center;
+            font-size: 18px;
+            color: #fff;
+            margin: 0;
+        }
+
+        .error p {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .success {
+            margin: 8px auto;
+            width: fit-content;
+            position: fixed;
+            top: 60px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            padding: 15px;
+            background-color: rgb(88, 189, 111); 
+            border-radius: 5px;
+            animation: hide 3s linear 2s 1 forwards;
+            font-weight: bold;
+        }
+
+        .success h2 {
+            padding: 0;
+            text-align: center;
+            font-size: 18px;
+            color: #fff;
+            margin: 0;
+        }
+
+        .success p {
+            color: green; 
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../other/components/notification') %>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <img class="preloader" src="/frontend/user/images/loader.gif" alt="">
+    </div><!-- end loader -->
+    <!-- END LOADER -->
+
+    <div id="wrapper">
+        <%- include('./components/user_Header') %>
+
+        <section style="height: 500px;" id="home" class="video-section js-height-full">
+            <div class="overlay"></div>
+            <div class="home-text-wrapper relative container">
+                <div class="home-message">
+                    <p>Sign Language Dictionary</p>
+                    <h2 style="margin: 0px; color:white ">Learn Sign Language with Common Everyday Phrases</h2>
+                    <small>A collection of commonly used phrases in sign language for daily life</small>
+                    <div class="btn-wrapper">
+                        <div class="text-center">
+                            <a href="#" class="btn btn-primary wow slideInLeft">Read More</a> &nbsp;&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section db p120">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tagline-message page-title text-center">
+                            <h3>Personal Information</h3>
+                            <ul class="breadcrumb">
+                                <li><a href="/user/home">Home</a></li>
+                                <li class="active">Personal Information</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <div class="card">
+            <img src="<%= user.user_avatar %>" alt="<%= user.user_name %>'s avatar" style="width:100%">
+            <h1><%= user.user_full_name %></h1>
+            <p class="title"><%= user.user_name %></p>
+            <p><%= new Date(user.user_date_of_birth).toDateString() %></p>
+            <p><%= user.user_phone_number %></p>
+            <p><%= user.user_email %></p>
+
+            <div class="btn-wrapper">
+                <a href="/user/edit-profile" class="btn btn-primary">Edit Profile</a>
+            </div>
+        </div>
+
+            <!-- FOOTER -->
+        <%- include('./components/user_Footer') %>
+    </div><!-- end wrapper -->
+
+    <!-- jQuery Files -->
+    <script src="/frontend/user/js/jquery.min.js"></script>
+    <script src="/frontend/user/js/bootstrap.min.js"></script>
+    <script src="/frontend/user/js/carousel.js"></script>
+    <script src="/frontend/user/js/animate.js"></script>
+    <script src="/frontend/user/js/custom.js"></script>
+
+    <script>
+        function searchVocabulary() {
+            const query = document.getElementById('searchInput').value;
+            if (query.length < 2) {
+                document.getElementById('suggestions').innerHTML = '';
+                return;
+            }
+
+            fetch(`/user/search-vocabulary?q=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    const suggestions = data.map(item => `<div class="suggestion-item" onclick="selectVocabulary('${item._id}')">${item.vocabulary_name}</div>`);
+                    document.getElementById('suggestions').innerHTML = suggestions.join('');
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function selectVocabulary(id) {
+            window.location.href = `/user/detail-vocabulary/${id}`;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,327 @@
+<!doctype html>
+<!--[if IE 9]> <html class="no-js ie9 fixed-layout" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js " lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Site Meta -->
+    <title>Sign Language Dictionary</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="/frontend/user/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/frontend/user/images/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="/frontend/user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/frontend/user/css/carousel.css">
+    <link rel="stylesheet" href="/frontend/user/css/animate.css">
+    <link rel="stylesheet" href="/frontend/user/style.css">
+
+    <!--[if lt IE 9]>
+        <script src="js/vendor/html5shiv.min.js"></script>
+        <script src="js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .video-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+
+    <!-- CSS for SEARCH bar -->
+    <style>
+        .search-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-container input[type="text"] {
+            width: 60%;
+            padding: 20px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+
+        .search-container button {
+            padding: 20px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: 1s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <img class="preloader" src="/frontend/user/images/loader.gif" alt="">
+    </div><!-- end loader -->
+    <!-- END LOADER -->
+
+    <div id="wrapper">
+        <%- include('./components/user_Header') %>
+
+            <section style="height: 500px;" id="home" class="video-section js-height-full">
+                <div class="overlay"></div>
+                <div class="home-text-wrapper relative container">
+                    <div class="home-message">
+                        <p>Sign Language Dictionary</p>
+                        <h2 style="margin: 0px; color:white">Learn sign language with commonly used daily phrases</h2>
+                        <small>A collection of commonly used phrases in sign language that are frequently used in everyday life</small>
+                        <div class="btn-wrapper">
+                            <div class="text-center">
+                                <a href="#" class="btn btn-primary wow slideInLeft">Read More</a> &nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div><!-- end row -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="section db p120">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tagline-message page-title text-center">
+                                <h3>Vocabulary List</h3>
+                                <ul class="breadcrumb">
+                                    <li><a href="/user/home">Home</a></li>
+                                    <li class="active">Vocabulary</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search bar -->
+            <section class="section db p120" style="background-color: white;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tagline-message page-title text-center">
+                                <div class="search-container">
+                                    <input type="text" id="searchInput" placeholder="Search for topics...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vocabulary list by Alphabet -->
+            <section class="section gb nopadtop">
+                <div class="container">
+                    <div class="boxed boxedp4">
+                        <div class="shop-top">
+                            <div class="clearfix">
+                                <div class="pull-left">
+                                    <p> Showing 1–<%= list_vocabulary.length %> of <%= list_vocabulary.length %> results
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="searchResults" style="margin-top: 20px;">
+                            <div class="row blog-grid shop-grid" id="vocabulary-list">
+                                <% list_vocabulary.forEach(item => { %>
+                                    <div class="vocabulary-item" data-name="<%= item.vocabulary_name %>">
+                                        <div style="margin-bottom: 25px;  box-shadow: 5px 5px 5px rgb(232, 232, 232);" class="col-md-3">
+                                            <div class="course-box shop-wrapper">
+                                                <div class="image-wrap entry">
+                                                    <a href="/user/detail-vocabulary/<%= item._id %>">
+                                                        <div class="video-container">
+                                                            <video style="height: 180px; object-fit:cover"
+                                                                class="img-responsive"
+                                                                src="<%= item.vocabulary_video_link.replace('src\\public', '' ) %>"
+                                                                muted></video>
+                                                            <div class="countdown" id="countdown-<%= item._id %>">3</div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <!-- end image-wrap -->
+                                                <div class="course-details shop-box text-center">
+                                                    <h4>
+                                                        <a href="/user/detail-vocabulary/<%= item._id %>" title="">
+                                                            <%= item.vocabulary_name %>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <!-- end details -->
+                                                <div class="course-footer clearfix">
+                                                    <div class="pull-left">
+                                                        <ul class="list-inline">
+                                                            <li>Difficulty:
+                                                                <% for (let i = 0; i < item.vocabulary_difficulty_level; i++) { %>
+                                                                    <i class="fa fa-star"></i>
+                                                                <% } %>
+                                                            </li>
+                                                        </ul>
+                                                        <ul style="margin-top: 10px;" class="list-inline">
+                                                            <li style="cursor: pointer;"
+                                                                data-vocabularyID="<%= item._id %>">
+                                                                <i class="fa fa-heart<%= item.is_Favorite ? '' : '-o' %>"></i> Favorite
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        </div>
+
+                        <hr class="invis">
+                    </div>
+                </div><!-- end container -->
+            </section>
+
+            <!-- FOOTER -->
+            <%- include('./components/user_Footer') %>
+    </div><!-- end wrapper -->
+
+    <!-- jQuery Files -->
+    <script src="/frontend/user/js/jquery.min.js"></script>
+    <script src="/frontend/user/js/bootstrap.min.js"></script>
+    <script src="/frontend/user/js/carousel.js"></script>
+    <script src="/frontend/user/js/animate.js"></script>
+    <script src="/frontend/user/js/custom.js"></script>
+    <!-- VIDEO BG PLUGINS -->
+    <script src="/frontend/user/js/videobg.js"></script>
+
+    <!-- AUTO RUN VIDEO -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const videos = document.querySelectorAll('.video-container');
+
+            videos.forEach(container => {
+                let timer;
+                const video = container.querySelector('video');
+                const countdownElement = container.querySelector('.countdown');
+
+                video.addEventListener('mouseenter', () => {
+                    let count = 3;
+                    countdownElement.textContent = count;
+                    countdownElement.style.display = 'block';
+
+                    timer = setInterval(() => {
+                        count--;
+                        countdownElement.textContent = count;
+
+                        if (count <= 0) {
+                            clearInterval(timer);
+                            countdownElement.style.display = 'none';
+                            video.play();
+                        }
+                    }, 1000); // Update every second
+                });
+
+                video.addEventListener('mouseleave', () => {
+                    clearInterval(timer);
+                    countdownElement.style.display = 'none';
+                    video.pause();
+                    video.currentTime = 0; // Reset video to the start
+                });
+            });
+        });
+
+    </script>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Handling the favorite button click
+        const favoriteButtons = document.querySelectorAll('.list-inline li[data-vocabularyID]');
+
+        favoriteButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const icon = this.querySelector('i');
+                const vocabularyId = this.getAttribute('data-vocabularyID');
+
+                // Call API to update favorite status
+                axios.post('/user/add-vocabulary-user', { vocabularyId: vocabularyId })
+                    .then(response => {
+                        if (response.data.success) {
+                            icon.classList.toggle('fa-heart-o');
+                            icon.classList.toggle('fa-heart');
+                        } else {
+                            console.error('Failed to update favorite status');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    });
+</script>
+
+<script>
+    function searchVocabulary() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const items = document.querySelectorAll('.vocabulary-item');
+
+        items.forEach(item => {
+            const name = item.getAttribute('data-name').toLowerCase();
+
+            if (name.includes(query)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
+    // Add event listener to the search input to trigger the function when the user types
+    document.getElementById('searchInput').addEventListener('keyup', searchVocabulary);
+</script>
+
+</html>
